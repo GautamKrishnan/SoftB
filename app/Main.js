@@ -46,8 +46,10 @@ function AppTabs() {
 const HomeStack = createStackNavigator();
 function HomeStackScreens() {
     return (
-        <HomeStack.Navigator>
-            <HomeStack.Screen name="Home Screen" component={HomeScreen} />
+        <HomeStack.Navigator screenOptions={{
+            headerShown: false
+        }}>
+            <HomeStack.Screen name="Home" component={HomeScreen} />
             <HomeStack.Screen name="TabA Details" component={Screen3} />
         </HomeStack.Navigator>
     );

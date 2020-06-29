@@ -68,7 +68,7 @@ export function LoginScreen({navigation}) {
             </TouchableOpacity>
             <Button
                 onPress={onLogin}
-                title="Press to Login"
+                title="Login"
             />
         </View>
     );
