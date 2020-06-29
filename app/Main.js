@@ -1,12 +1,15 @@
 import React from 'react';
-import { Button, View, Text } from 'react-native';
+import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator} from '@react-navigation/stack';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import {Screen3} from "./screens/Screen3";
-import {Screen4} from "./screens/Screen4";
+import {MoreScreen} from "./screens/MoreScreen";
 import {HomeScreen} from "./screens/HomeScreen";
+import {LoginScreen} from "./screens/LoginScreen";
+import {AlertsScreen} from "./screens/AlertsScreen";
+import {FeedsScreen} from "./screens/FeedsScreen";
 
 const Tab = createBottomTabNavigator();
 function AppTabs() {
@@ -15,25 +18,27 @@ function AppTabs() {
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
-                    if (route.name === 'TabA') {
-                        iconName = focused
-                            ? 'ios-information-circle'
-                            : 'ios-information-circle-outline';
-                    } else if (route.name === 'TabB') {
-                        iconName = focused
-                            ? 'ios-list-box'
-                            : 'ios-list';
+                    if (route.name === 'Home') {
+                        iconName = 'ios-home'
+                    } else if (route.name === 'Feeds') {
+                        return <FontAwesome name="rss-square" size={size} color={color} />
+                    } else if (route.name === 'Alerts') {
+                        iconName = 'ios-notifications'
+                    } else if (route.name === 'More') {
+                        return <FontAwesome name="bars" size={size} color={color} />
                     }
                     return <Ionicons name={iconName} size={size} color={color}     />;
                 },
             })}
             tabBarOptions={{
-                activeTintColor: 'tomato',
+                activeTintColor: 'black',
                 inactiveTintColor: 'gray',
             }}
         >
-            <Tab.Screen name="TabA" component={HomeStackScreens} />
-            <Tab.Screen name="TabB" component={Screen4} />
+            <Tab.Screen name="Home" component={HomeStackScreens} />
+            <Tab.Screen name="Feeds" component={FeedsScreen}/>
+            <Tab.Screen name="Alerts" component={AlertsScreen}/>
+            <Tab.Screen name="More" component={MoreScreen} />
         </Tab.Navigator>
     );
 }
@@ -48,11 +53,21 @@ function HomeStackScreens() {
     );
 }
 
+const RootStack = createStackNavigator();
 
 export default function Main() {
+
+    const loginInfo = useSelector(state => state.LoginReducer.loginState);
+
     return (
         <NavigationContainer>
-                <AppTabs />
+            <RootStack.Navigator headerMode='none'>
+                {
+                    loginInfo ?
+                        <RootStack.Screen name='App' component={AppTabs} />
+                        : <RootStack.Screen name='Login Screen' component={LoginScreen} />
+                }
+            </RootStack.Navigator>
         </NavigationContainer>
     )
 }

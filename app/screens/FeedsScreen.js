@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export function Screen4() {
+export function FeedsScreen() {
     return (
         <View>
             <Text style={{textAlign: 'center', marginTop: 300}}>
-                Screen 4 details here.
+                Feeds to be here.
             </Text>
         </View>
     );
