@@ -36,9 +36,6 @@ export function LoginScreen({navigation}) {
         setPassword(text);
     }
 
-    console.log(loginID);
-    console.log(password);
-
     return (
         <View style={{ flex: 1, alignItems: 'center' }}>
             <Text style={{fontSize: 30, paddingTop: 100, fontWeight: 'bold'}}>
